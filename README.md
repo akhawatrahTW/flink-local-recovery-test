@@ -16,17 +16,21 @@ This repo contains everything needed to spin up a local test environment running
 1. To start everything, run the following from the project root directory:
 
 `./scripts/create.sh`
+
 2. To test local recovery, task manager statefulset is scaled down to 2:
 
 `kubectl scale --replicas=2 sts/flink-taskmanager`
+
 3. This will terminate `flink-taskmanager-2` which will stop the flink job since we only have 2 task slots now while parallelism is set to 3.
 
 4. Scaling the statefulset back to 3 adds a 3rd pod. Total task slots is 3 so the job can start again:
 
 `kubectl scale --replicas=3 sts/flink-taskmanager`
+
 5. Assuming local recovery works as stated, something about `IncrementalLocalKeyedStateHandle` is printed in the logs:
 
 `kubectl logs -f flink-taskmanager-2`
+
 6. Run the following from the project root directory to stop everything:
 
 `./scripts/terminate.sh`
