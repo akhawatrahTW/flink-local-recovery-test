@@ -23,7 +23,9 @@ This repo contains everything needed to spin up a local test environment running
 
 3. This will terminate `flink-taskmanager-2` which will stop the flink job since we only have 2 task slots now while parallelism is set to 3.
 
-4. Scaling the statefulset back to 3 adds a 3rd pod. Total task slots is 3 so the job can start again:
+4. Wait until the job manager cancels the job: `switched from CANCELING to CANCELED` is printed in the logs.
+
+5. Scaling the statefulset back to 3 adds a 3rd pod. Total task slots is 3 so the job can start again:
 
 `kubectl scale --replicas=3 sts/flink-taskmanager`
 
